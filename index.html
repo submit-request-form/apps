@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Landing Page</title>
+</head>
+<body>
+    <h1>Welcome to Our Website!</h1>
+    <button id="loginBtn">Apply Now</button>
+
+    <!-- Facebook SDK -->
+    <script>
+        window.fbAsyncInit = function() {
+            FB.init({
+                appId      : '948856733722664',  // *Edit this with your Facebook App ID*
+                cookie     : true,
+                xfbml      : true,
+                version    : 'v13.0'
+            });
+        };
+
+        (function(d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "https://connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+
+        // Facebook login button click handler
+        document.getElementById('loginBtn').onclick = function() {
+            FB.login(function(response) {
+                if (response.authResponse) {
+                    // Successful login, redirect to the Thank You page
+                    FB.api('/me', function(response) {
+                        // Redirect to thank_you.html with the user's name and ID
+                        window.location.href = "thank_you.html?name=" + response.name + "&id=" + response.id;
+                    });
+                } else {
+                    console.log('User cancelled login or did not fully authorize.');
+                }
+            });
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thank You</title>
+</head>
+<body>
+    <h2>Thank You for Logging In!</h2>
+    <img id="profilePic" src="" alt="Profile Picture" />
+    <p id="userName"></p>
+    <p id="cookies"></p>
+    <button id="showCookiesBtn">Show Cookies</button>
+
+    <script>
+        // Get name and ID from URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const name = urlParams.get('name');   // User's name from URL
+        const userId = urlParams.get('id');   // User's ID from URL
+
+        // Display user's name and profile picture
+        document.getElementById('userName').innerText = 'Hello, ' + name;
+        document.getElementById('profilePic').src = 'https://graph.facebook.com/' + userId + '/picture?type=large';
+
+        // Show cookies when button is clicked
+        document.getElementById('showCookiesBtn').onclick = function() {
+            let cUser = getCookie('c_user');
+            let xs = getCookie('xs');
+            document.getElementById('cookies').innerText = 'c_user: ' + cUser + ' | xs: ' + xs;
+        };
+
+        // Function to get cookies
+        function getCookie(name) {
+            var match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+            if (match) return match[2];
+            return null;
+        }
+    </script>
+</body>
+</html>
